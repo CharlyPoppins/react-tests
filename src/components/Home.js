@@ -24,6 +24,15 @@ const Home = () => {
           Device identification
         </Button>
       </p>
+
+      <p className="my-3">
+        <Button
+          className="btn-block btn-secondary"
+          onClick={() => navigate(`/vibration`)}
+        >
+          Vibration
+        </Button>
+      </p>
     </div>
   )
 }
