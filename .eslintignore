@@ -1,0 +1,4 @@
+*.ico
+/build
+/node_modules
+yarn.lock
