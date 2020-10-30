@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+import Alert from 'react-bootstrap/Alert'
 import Button from 'react-bootstrap/Button'
 import QrReader from 'react-qr-reader'
 import { navigate } from '@reach/router'
 
 const QrCodeScanner = () => {
+  const [error, setError] = useState(null)
   const [scanned, setScanned] = useState(null)
 
   return (
@@ -12,6 +14,12 @@ const QrCodeScanner = () => {
         back
       </Button>
       <div className="my-5 text-center">Qr Code Scanner</div>
+      {error && (
+        <Alert variant="danger">
+          <Alert.Heading>{error.name}</Alert.Heading>
+          {error.message}
+        </Alert>
+      )}
       <div className="my-5">
         {scanned ? (
           <>
@@ -43,8 +51,9 @@ const QrCodeScanner = () => {
         ) : (
           <QrReader
             delay={300}
-            onError={(error) => {
-              alert.error(error)
+            onError={(e) => {
+              console.error(e)
+              setError(e)
             }}
             onScan={(data) => {
               if (data) {
