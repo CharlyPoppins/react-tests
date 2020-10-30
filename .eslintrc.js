@@ -26,7 +26,7 @@ module.exports = {
     'react/jsx-filename-extension': [1, { extensions: ['.js'] }],
     'react/forbid-prop-types': [0, { forbid: ['any'] }],
     'react/prop-types': 1,
-    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-console': ['error', { allow: ['log', 'warn', 'error'] }],
     'no-extra-semi': ['error'],
   },
   settings: {
