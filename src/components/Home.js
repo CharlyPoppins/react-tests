@@ -2,10 +2,16 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
+import InstallButton from 'components/InstallButton'
+
 const Home = () => {
   return (
     <div>
       <p className="my-5 text-center">This is a test app</p>
+
+      <p className="my-3">
+        <InstallButton />
+      </p>
 
       <p className="my-3">
         <Button
