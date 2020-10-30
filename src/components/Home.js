@@ -15,6 +15,15 @@ const Home = () => {
           QR Code scanner
         </Button>
       </p>
+
+      <p className="my-3">
+        <Button
+          className="btn-block btn-secondary"
+          onClick={() => navigate(`/device-identification`)}
+        >
+          Device identification
+        </Button>
+      </p>
     </div>
   )
 }

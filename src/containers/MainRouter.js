@@ -3,6 +3,7 @@ import { Router } from '@reach/router'
 
 import Home from 'components/Home'
 import QrCodeScanner from 'components/QrCodeScanner'
+import DeviceIdentification from 'components/DeviceIdentification'
 
 const MainRouter = () => {
   return (
@@ -10,6 +11,7 @@ const MainRouter = () => {
       <Router>
         <Home path="" default />
         <QrCodeScanner path="/qr-code-scanner" />
+        <DeviceIdentification path="/device-identification" />
       </Router>
     </div>
   )
