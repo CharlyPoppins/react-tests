@@ -25,7 +25,7 @@ const Vibration = () => {
       <p className="my-5 text-center">
         {`Vibration is ${isVibrationEnabled() ? 'Enabled ' : 'Disabled'}`}
         <br />
-        (but we can’t ensure device has a vibrator)
+        {isVibrationEnabled() && <>but we can’t ensure device has a vibrator</>}
       </p>
       {isVibrationEnabled() && (
         <p className="my-3">
