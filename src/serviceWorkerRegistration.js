@@ -54,6 +54,10 @@ export function register(config) {
       }
     })
   }
+
+  window.addEventListener('appinstalled', (evt) => {
+    console.log('PWA is installed', evt)
+  })
 }
 
 function registerValidSW(swUrl, config) {
