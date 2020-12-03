@@ -1,10 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
 import InstallButton from 'components/InstallButton'
 
+import { isStandalone } from '../helpers'
+
+const test = async () => {
+  console.log('PWA is installed', isStandalone())
+
+  const relatedApps = await navigator.getInstalledRelatedApps()
+  console.log('navigator.getInstalledRelatedApps', relatedApps)
+
+  const registration = await navigator.serviceWorker.ready()
+  console.log('navigator.serviceWorker.read', registration)
+
+  navigator.serviceWorker.addEventListener('install', (event) => {
+    console.log('addEventListener install', event)
+  })
+
+  navigator.serviceWorker.addEventListener('activate', (event) => {
+    console.log('addEventListener activate', event)
+  })
+
+  navigator.serviceWorker.addEventListener('fetch', (event) => {
+    console.log('addEventListener fetch', event)
+  })
+}
+
 const Home = () => {
+  useEffect(() => {
+    test()
+  }, [])
+
   return (
     <div>
       <p className="my-5 text-center">This is a test app</p>

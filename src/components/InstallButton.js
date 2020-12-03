@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 
+import { isStandalone } from '../helpers'
+
 const InstallButton = () => {
   const [supportsPWA, setSupportsPWA] = useState(false)
   const [promptInstall, setPromptInstall] = useState(null)
@@ -16,7 +18,19 @@ const InstallButton = () => {
     return () => window.removeEventListener('transitionend', handler)
   }, [])
 
+  const isInstalled = isStandalone()
+
+  console.log('isInstalled', isInstalled)
   console.log('supportsPWA', supportsPWA)
+
+  const getLabel = () => {
+    if (isInstalled) {
+      return 'App is already installed'
+    }
+
+    return supportsPWA ? 'Install PWA' : 'Device does not support PWA install'
+  }
+
   return (
     <Button
       className="btn-block btn-secondary"
@@ -25,9 +39,9 @@ const InstallButton = () => {
           promptInstall.prompt()
         }
       }}
-      disabled={!supportsPWA}
+      disabled={isInstalled || !supportsPWA}
     >
-      {supportsPWA ? 'Install PWA' : 'Device does not support PWA install'}
+      {getLabel()}
     </Button>
   )
 }

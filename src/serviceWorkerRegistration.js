@@ -46,7 +46,6 @@ export function register(config) {
             'This web app is being served cache-first by a service ' +
               'worker. To learn more, visit https://cra.link/PWA',
           )
-          console.log(registration)
         })
       } else {
         // Is not localhost. Just register service worker
