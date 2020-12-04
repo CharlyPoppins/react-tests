@@ -21,6 +21,13 @@ const isLocalhost = Boolean(
     ),
 )
 
+self.addEventListener('message', (event) => {
+  console.log('SW message', event)
+  if (event.data && event.data.type === 'MESSAGE_IDENTIFIER') {
+    console.log('SW message is MESSAGE_IDENTIFIER')
+  }
+})
+
 export function register(config) {
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
@@ -55,20 +62,24 @@ export function register(config) {
   }
 
   window.addEventListener('appinstalled', (evt) => {
-    console.log('PWA is installed', evt)
+    console.log('SW appinstalled event', evt)
   })
 }
 
 function registerValidSW(swUrl, config) {
+  console.log('registerValidSW', swUrl, config)
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
       registration.onupdatefound = () => {
+        console.log('onupdatefound')
         const installingWorker = registration.installing
         if (installingWorker == null) {
           return
         }
+        registration.installing.postMessage('Hello, i am installing.')
         installingWorker.onstatechange = () => {
+          console.log('registration.installing', installingWorker)
           if (installingWorker.state === 'installed') {
             if (navigator.serviceWorker.controller) {
               // At this point, the updated precached content has been fetched,
