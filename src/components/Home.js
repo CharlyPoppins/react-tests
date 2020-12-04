@@ -4,6 +4,8 @@ import { navigate } from '@reach/router'
 
 import InstallButton from 'components/InstallButton'
 
+import { version } from '../../package.json'
+
 import { isStandalone } from '../helpers'
 
 const test = async () => {
@@ -67,6 +69,8 @@ const Home = () => {
           Vibration
         </Button>
       </p>
+
+      <p className="my-3">{`Version : ${version}`}</p>
     </div>
   )
 }
