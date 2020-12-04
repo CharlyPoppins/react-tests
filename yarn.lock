@@ -2667,6 +2667,11 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
+biri@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/biri/-/biri-0.4.0.tgz#8c6680ebe4f449a14a019911ffc82fc5f8d81649"
+  integrity sha512-uTKRN4uYNRxbI4UGo7TBfKzQVHnJEeaynn/3BTurfjxLYlfHMWkZXZsI/pqkxaoP576Mfkh+C1L6n/dAnxnUBg==
+
 bluebird@^3.5.5:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"

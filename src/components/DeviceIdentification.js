@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
+import biri from 'biri'
 import du from 'device-uuid'
 
 const DeviceIdentification = () => {
+  const [uniqueId, setUniqueId] = useState(null)
+  const getUniqueId = async () => {
+    const id = await biri()
+    setUniqueId(id)
+  }
+  useEffect(() => {
+    getUniqueId()
+  }, [])
+
   const deviceUuid = new du.DeviceUUID()
 
   const uuid = deviceUuid.get()
@@ -42,6 +52,10 @@ const DeviceIdentification = () => {
         back
       </Button>
       <p className="my-5 text-center">Device identification</p>
+      <p className="my-3 text-center">
+        <strong>unique ID for a browser application : </strong>
+        {uniqueId}
+      </p>
       <p className="my-3 text-center">
         <strong>UUID : </strong>
         {uuid}
