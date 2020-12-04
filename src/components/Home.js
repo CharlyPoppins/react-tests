@@ -12,7 +12,7 @@ const test = async () => {
   const relatedApps = await navigator.getInstalledRelatedApps()
   console.log('navigator.getInstalledRelatedApps', relatedApps)
 
-  const registration = await navigator.serviceWorker.ready()
+  const registration = await navigator.serviceWorker.ready
   console.log('navigator.serviceWorker.read', registration)
 
   navigator.serviceWorker.addEventListener('install', (event) => {
