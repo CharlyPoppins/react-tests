@@ -43,6 +43,8 @@ const test = async () => {
   }
 }
 
+const notificationsEnabled = Notification.permission === 'granted'
+
 const Home = () => {
   useEffect(() => {
     test()
@@ -93,6 +95,25 @@ const Home = () => {
           }}
         >
           Post message to SW
+        </Button>
+      </p>
+
+      <p className="my-3">
+        <Button
+          className="btn-block btn-secondary"
+          onClick={async () => {
+            if ((await Notification.requestPermission()) === 'denied') {
+              // eslint-disable-next-line no-alert
+              alert(
+                'Notifications blocked. Please enable them in your browser.',
+              )
+            }
+          }}
+          disable={notificationsEnabled}
+        >
+          {notificationsEnabled
+            ? 'Notifications are enabled'
+            : 'Click to accept permission'}
         </Button>
       </p>
 
