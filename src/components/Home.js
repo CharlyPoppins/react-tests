@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
+import Cookie from 'components/Cookie'
 import InstallButton from 'components/InstallButton'
 
 import { version } from '../../package.json'
@@ -94,6 +95,8 @@ const Home = () => {
           Post message to SW
         </Button>
       </p>
+
+      <Cookie />
 
       <p className="my-3">{`Version : ${version}`}</p>
     </div>
