@@ -113,7 +113,7 @@ const Home = () => {
         >
           {notificationsEnabled
             ? 'Notifications are enabled'
-            : 'Click to accept permission'}
+            : 'Click to accept notifications'}
         </Button>
       </p>
 
