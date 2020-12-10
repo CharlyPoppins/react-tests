@@ -29,9 +29,9 @@ const Notifications = () => {
           className="btn-block btn-secondary"
           onClick={() => {
             // eslint-disable-next-line no-unused-vars
-            const n = new Notification('This is a text notification', {
-              tag: 'soManyNotification',
-            })
+            const n = new Notification(
+              `This is a text notification ${Math.random(100)}`,
+            )
           }}
           disabled={!notificationsEnabled}
         >
