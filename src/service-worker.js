@@ -1,31 +1,44 @@
 /* eslint-disable */
-// This optional code is used to register a service worker.
-// register() is not called by default.
-
-// This lets the app load faster on subsequent visits in production, and gives
-// it offline capabilities. However, it also means that developers (and users)
-// will only see deployed updates on subsequent visits to a page, after all the
-// existing tabs open on the page have been closed, since previously cached
-// resources are updated in the background.
-
-// To learn more about the benefits of this model and instructions on how to
-// opt-in, read https://cra.link/PWA
-
-const isLocalhost = Boolean(
-  window.location.hostname === 'localhost' ||
-    // [::1] is the IPv6 localhost address.
-    window.location.hostname === '[::1]' ||
-    // 127.0.0.0/8 are considered localhost for IPv4.
-    window.location.hostname.match(
-      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/,
-    ),
-)
 
 self.addEventListener('message', (event) => {
   console.log('SW message', event)
   if (event.data && event.data.type === 'MESSAGE_IDENTIFIER') {
     console.log('SW message is MESSAGE_IDENTIFIER')
   }
+  // Force SW upgrade (activation of new installed SW version)
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting()
+  }
+})
+
+self.addEventListener('install', (event) => {
+  console.log('SW install')
+})
+
+self.addEventListener('activate', (event) => {
+  console.log('SW activate')
+})
+
+self.addEventListener('fetch', (event) => {
+  console.log('SW fetch', event)
+  event.waitUntil(
+    (async function () {
+      // Exit early if we don't have access to the client.
+      // Eg, if it's cross-origin.
+      if (!event.clientId) return
+
+      // Get the client.
+      const client = await clients.get(event.clientId)
+      // Exit early if we don't get the client.
+      // Eg, if it closed.
+      if (!client) return
+
+      // Send a message to the client.
+      client.postMessage({
+        msg: 'Hey I just got a fetch from you!',
+      })
+    })(),
+  )
 })
 
 export function register(config) {
@@ -41,23 +54,7 @@ export function register(config) {
 
     window.addEventListener('load', () => {
       const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`
-
-      if (isLocalhost) {
-        // This is running on localhost. Let's check if a service worker still exists or not.
-        checkValidServiceWorker(swUrl, config)
-
-        // Add some additional logging to localhost, pointing developers to the
-        // service worker/PWA documentation.
-        navigator.serviceWorker.ready.then((registration) => {
-          console.log(
-            'This web app is being served cache-first by a service ' +
-              'worker. To learn more, visit https://cra.link/PWA',
-          )
-        })
-      } else {
-        // Is not localhost. Just register service worker
-        registerValidSW(swUrl, config)
-      }
+      registerValidSW(swUrl, config)
     })
   }
 
@@ -67,7 +64,7 @@ export function register(config) {
 }
 
 function registerValidSW(swUrl, config) {
-  console.log('registerValidSW', swUrl, config)
+  console.log('SW registerValidSW', swUrl, config)
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -98,7 +95,7 @@ function registerValidSW(swUrl, config) {
               // At this point, everything has been precached.
               // It's the perfect time to display a
               // "Content is cached for offline use." message.
-              console.log('Content is cached for offline use.')
+              console.log('SW Content is cached for offline use.')
 
               // Execute callback
               if (config && config.onSuccess) {
@@ -110,48 +107,6 @@ function registerValidSW(swUrl, config) {
       }
     })
     .catch((error) => {
-      console.error('Error during service worker registration:', error)
+      console.error('SW Error during service worker registration:', error)
     })
-}
-
-function checkValidServiceWorker(swUrl, config) {
-  // Check if the service worker can be found. If it can't reload the page.
-  fetch(swUrl, {
-    headers: { 'Service-Worker': 'script' },
-  })
-    .then((response) => {
-      // Ensure service worker exists, and that we really are getting a JS file.
-      const contentType = response.headers.get('content-type')
-      if (
-        response.status === 404 ||
-        (contentType != null && contentType.indexOf('javascript') === -1)
-      ) {
-        // No service worker found. Probably a different app. Reload the page.
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.unregister().then(() => {
-            window.location.reload()
-          })
-        })
-      } else {
-        // Service worker found. Proceed as normal.
-        registerValidSW(swUrl, config)
-      }
-    })
-    .catch(() => {
-      console.log(
-        'No internet connection found. App is running in offline mode.',
-      )
-    })
-}
-
-export function unregister() {
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.ready
-      .then((registration) => {
-        registration.unregister()
-      })
-      .catch((error) => {
-        console.error(error.message)
-      })
-  }
 }

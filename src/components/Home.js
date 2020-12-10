@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
 import Cookie from 'components/Cookie'
 import Notifications from 'components/Notifications'
-import InstallButton from 'components/InstallButton'
+import PwaActions from 'components/PwaActions'
 
 import { version } from '../../package.json'
 
@@ -21,9 +21,6 @@ const test = async () => {
   }
 
   if ('serviceWorker' in navigator) {
-    const registration = await navigator.serviceWorker.ready
-    console.log('navigator.serviceWorker.ready', registration)
-
     navigator.serviceWorker.addEventListener('install', (event) => {
       console.log('addEventListener install', event)
     })
@@ -36,19 +33,35 @@ const test = async () => {
       console.log('addEventListener fetch', event)
     })
 
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      console.log('addEventListener message', event)
+    })
+
     navigator.serviceWorker.onmessage = (event) => {
       console.log('navigator receive message from SW', event)
     }
   } else {
-    console.warn('navigator.serviceWorker is not available')
+    console.warn('Service workers are not supported.')
   }
 }
-
 const Home = () => {
+  const [currentServiceWorker, setCurrentServiceWorker] = useState(null)
+
+  const waitForServiceWorker = async () => {
+    if ('serviceWorker' in navigator) {
+      const registration = await navigator.serviceWorker.ready
+      setCurrentServiceWorker(registration)
+    } else {
+      console.warn('Service workers are not supported.')
+    }
+  }
+
   useEffect(() => {
+    waitForServiceWorker()
     test()
   }, [])
 
+  console.log('currentServiceWorker', currentServiceWorker)
   return (
     <div>
       <p className="my-1 text-center">Device tests</p>
@@ -82,19 +95,7 @@ const Home = () => {
 
       <p className="my-1 text-center">PWA testing</p>
 
-      <p className="my-3">
-        <InstallButton />
-        <Button
-          className="btn-block btn-secondary"
-          onClick={() => {
-            navigator.serviceWorker.controller.postMessage({
-              type: 'MESSAGE_IDENTIFIER',
-            })
-          }}
-        >
-          Post message to SW
-        </Button>
-      </p>
+      <PwaActions />
 
       <Notifications />
 
