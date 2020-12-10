@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import { navigate } from '@reach/router'
 
 import Cookie from 'components/Cookie'
+import Notifications from 'components/Notifications'
 import InstallButton from 'components/InstallButton'
 
 import { version } from '../../package.json'
@@ -42,8 +43,6 @@ const test = async () => {
     console.warn('navigator.serviceWorker is not available')
   }
 }
-
-const notificationsEnabled = Notification.permission === 'granted'
 
 const Home = () => {
   useEffect(() => {
@@ -98,24 +97,7 @@ const Home = () => {
         </Button>
       </p>
 
-      <p className="my-3">
-        <Button
-          className="btn-block btn-secondary"
-          onClick={async () => {
-            if ((await Notification.requestPermission()) === 'denied') {
-              // eslint-disable-next-line no-alert
-              alert(
-                'Notifications blocked. Please enable them in your browser.',
-              )
-            }
-          }}
-          disable={notificationsEnabled}
-        >
-          {notificationsEnabled
-            ? 'Notifications are enabled'
-            : 'Click to accept notifications'}
-        </Button>
-      </p>
+      <Notifications />
 
       <Cookie />
 
