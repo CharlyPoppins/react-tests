@@ -53,8 +53,12 @@ const DeviceIdentification = () => {
       </Button>
       <p className="my-5 text-center">Device identification</p>
       <p className="my-3 text-center">
-        <strong>unique ID for a browser application : </strong>
+        <strong>Unique ID for a browser application : </strong>
         {uniqueId}
+        <br />
+        <a href="https://github.com/dashersw/biri">
+          https://github.com/dashersw/biri
+        </a>
       </p>
       <p className="my-3 text-center">
         <strong>UUID : </strong>
@@ -71,6 +75,9 @@ const DeviceIdentification = () => {
       <p className="my-3">
         <ul>
           {Object.entries(infos).map((array) => {
+            if (['hashInt', 'hashMD5'].includes(array[0])) {
+              return null
+            }
             return (
               <li>
                 <strong>{array[0]} : </strong>
