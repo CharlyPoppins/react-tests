@@ -18,6 +18,10 @@ ReactDOM.render(
 serviceWorker.register({
   onUpdate: (registration) => {
     console.log('onUpdate', registration)
+    const event = new CustomEvent('onNewServiceWorker', {
+      detail: { registration },
+    })
+    document.dispatchEvent(event)
   },
   onSuccess: (registration) => {
     console.log('onSuccess', registration)
