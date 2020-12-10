@@ -51,11 +51,7 @@ const Home = () => {
 
   return (
     <div>
-      <p className="my-5 text-center">This is a test app</p>
-
-      <p className="my-3">
-        <InstallButton />
-      </p>
+      <p className="my-1 text-center">Device tests</p>
 
       <p className="my-3">
         <Button
@@ -84,7 +80,10 @@ const Home = () => {
         </Button>
       </p>
 
+      <p className="my-1 text-center">PWA testing</p>
+
       <p className="my-3">
+        <InstallButton />
         <Button
           className="btn-block btn-secondary"
           onClick={() => {
@@ -98,6 +97,8 @@ const Home = () => {
       </p>
 
       <Notifications />
+
+      <p className="my-1 text-center">Cookie testing</p>
 
       <Cookie />
 
