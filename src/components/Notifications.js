@@ -62,10 +62,20 @@ const Notifications = ({ currentServiceWorker }) => {
               )
 
               console.log('subscription', subscription)
+              console.log('subscription JSON', subscription.toJSON())
 
+              const { keys } = subscription.toJSON()
+
+              console.log('keys', keys)
               const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/web-push/register`,
-                { method: 'POST' },
+                {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    endpoint: subscription.endpoint,
+                    keys,
+                  }),
+                },
               )
               if (response.ok) {
                 const json = await response.json()
