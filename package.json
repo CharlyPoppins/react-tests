@@ -11,6 +11,7 @@
     "bootstrap": "^4.5.3",
     "device-uuid": "^1.0.4",
     "jwt-decode": "^3.1.2",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
