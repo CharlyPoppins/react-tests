@@ -97,7 +97,7 @@ const Home = () => {
 
       <PwaActions />
 
-      <Notifications />
+      <Notifications currentServiceWorker={currentServiceWorker} />
 
       <p className="my-1 text-center">Cookie testing</p>
 
