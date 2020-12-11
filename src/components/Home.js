@@ -5,6 +5,7 @@ import { navigate } from '@reach/router'
 import Cookie from 'components/Cookie'
 import Notifications from 'components/Notifications'
 import PwaActions from 'components/PwaActions'
+import WebAuthn from 'components/WebAuthn'
 
 import { version } from '../../package.json'
 
@@ -101,6 +102,10 @@ const Home = () => {
       <p className="my-1 text-center">Cookie testing</p>
 
       <Cookie />
+
+      <p className="my-1 text-center">WebAuthn</p>
+
+      <WebAuthn />
 
       <p className="my-3">{`Version : ${version}`}</p>
     </div>
