@@ -36,7 +36,6 @@ const PwaActions = () => {
             onClick={() => {
               if ('serviceWorker' in navigator) {
                 console.log('Sending message MESSAGE_IDENTIFIER to SW')
-                console.log(navigator.serviceWorker)
                 navigator.serviceWorker.controller.postMessage({
                   type: 'MESSAGE_IDENTIFIER',
                 })
