@@ -5,10 +5,15 @@ import PropTypes from 'prop-types'
 
 import { urlBase64ToUint8Array } from '../helpers/webPush'
 
+const isNotificationsEnabled = () => {
+  try {
+    return Notification.permission === 'granted'
+  } catch (e) {
+    console.error(e)
+    return false
+  }
+}
 const Notifications = ({ currentServiceWorker }) => {
-  const notificationsEnabled =
-    currentServiceWorker && Notification.permission === 'granted'
-
   return (
     <div className="my-3 row">
       <div className="col-6">
@@ -22,9 +27,9 @@ const Notifications = ({ currentServiceWorker }) => {
               )
             }
           }}
-          disabled={notificationsEnabled}
+          disabled={isNotificationsEnabled}
         >
-          {notificationsEnabled
+          {isNotificationsEnabled
             ? 'Notifications are enabled'
             : 'Click to accept notifications'}
         </Button>
@@ -41,7 +46,7 @@ const Notifications = ({ currentServiceWorker }) => {
               console.warn('No Service worker provided.')
             }
           }}
-          disabled={!notificationsEnabled}
+          disabled={!isNotificationsEnabled}
         >
           Send notification
         </Button>
