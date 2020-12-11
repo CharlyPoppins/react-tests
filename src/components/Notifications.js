@@ -1,6 +1,7 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import { toast } from 'react-toastify'
+import PropTypes from 'prop-types'
 
 const notificationsEnabled = Notification.permission === 'granted'
 
@@ -88,6 +89,18 @@ const Notifications = ({ currentServiceWorker }) => {
       </div>
     </div>
   )
+}
+
+Notifications.propTypes = {
+  currentServiceWorker: PropTypes.shape({
+    pushManager: PropTypes.shape({
+      subscribe: PropTypes.func,
+    }),
+  }),
+}
+
+Notifications.defaultProps = {
+  currentServiceWorker: null,
 }
 
 export default Notifications
