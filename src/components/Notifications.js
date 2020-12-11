@@ -1,38 +1,62 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { toast } from 'react-toastify'
 import PropTypes from 'prop-types'
 
 import { urlBase64ToUint8Array } from '../helpers/webPush'
 
+const isNotificationsSupported = () => {
+  if ('Notification' in window) {
+    return true
+  }
+  return false
+}
+
 const isNotificationsEnabled = () => {
   try {
-    return Notification.permission === 'granted'
+    if (isNotificationsSupported()) {
+      return Notification.permission === 'granted'
+    }
+    return false
   } catch (e) {
     console.error(e)
     return false
   }
 }
 const Notifications = ({ currentServiceWorker }) => {
+  const [notificationsEnabled, setNotificationsEnabled] = useState(
+    isNotificationsEnabled(),
+  )
   return (
     <div className="my-3 row">
       <div className="col-6">
-        <Button
-          className="btn-block btn-secondary"
-          onClick={async () => {
-            if ((await Notification.requestPermission()) === 'denied') {
-              // eslint-disable-next-line no-alert
-              alert(
-                'Notifications blocked. Please enable them in your browser.',
-              )
-            }
-          }}
-          disabled={isNotificationsEnabled}
-        >
-          {isNotificationsEnabled
-            ? 'Notifications are enabled'
-            : 'Click to accept notifications'}
-        </Button>
+        {isNotificationsSupported() ? (
+          <Button
+            className="btn-block btn-secondary"
+            onClick={async () => {
+              if ((await Notification.requestPermission()) === 'denied') {
+                // eslint-disable-next-line no-alert
+                alert(
+                  'Notifications blocked. Please enable them in your browser.',
+                )
+              }
+              setNotificationsEnabled(isNotificationsEnabled())
+            }}
+            disabled={notificationsEnabled}
+          >
+            {notificationsEnabled
+              ? 'Notifications are enabled'
+              : 'Click to accept notifications'}
+          </Button>
+        ) : (
+          <Button
+            className="btn-block btn-secondary"
+            onClick={() => {}}
+            disabled
+          >
+            Notifications are not supported
+          </Button>
+        )}
       </div>
       <div className="col-6">
         <Button
@@ -46,7 +70,11 @@ const Notifications = ({ currentServiceWorker }) => {
               console.warn('No Service worker provided.')
             }
           }}
-          disabled={!isNotificationsEnabled}
+          disabled={
+            !currentServiceWorker ||
+            !isNotificationsSupported() ||
+            !notificationsEnabled
+          }
         >
           Send notification
         </Button>
@@ -93,6 +121,7 @@ const Notifications = ({ currentServiceWorker }) => {
               console.warn('No Service worker provided.')
             }
           }}
+          disabled={!currentServiceWorker}
         >
           Subscribe to push notification
         </Button>
