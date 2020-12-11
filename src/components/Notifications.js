@@ -59,14 +59,23 @@ const Notifications = ({ currentServiceWorker }) => {
           className="btn-block btn-secondary"
           onClick={async () => {
             if (currentServiceWorker) {
-              const subscription = await currentServiceWorker.pushManager.subscribe(
-                {
-                  userVisibleOnly: true,
-                  applicationServerKey: urlBase64ToUint8Array(
-                    process.env.REACT_APP_PUBLIC_VAPID_KEY,
-                  ),
-                },
+              console.log(
+                'currentServiceWorker.pushManager',
+                currentServiceWorker.pushManager,
               )
+
+              const subscribeOptions = {
+                userVisibleOnly: true,
+                applicationServerKey: urlBase64ToUint8Array(
+                  process.env.REACT_APP_PUBLIC_VAPID_KEY,
+                ),
+              }
+              console.log('subscribeOptions', subscribeOptions)
+
+              const subscription = await currentServiceWorker.pushManager.subscribe(
+                subscribeOptions,
+              )
+
               console.log('subscription', subscription)
 
               const response = await fetch(
