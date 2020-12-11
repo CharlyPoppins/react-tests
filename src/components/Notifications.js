@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 
 import { urlBase64ToUint8Array } from '../helpers/webPush'
 
-const notificationsEnabled = Notification.permission === 'granted'
-
 const Notifications = ({ currentServiceWorker }) => {
+  const notificationsEnabled =
+    currentServiceWorker && Notification.permission === 'granted'
+
   return (
     <div className="my-3 row">
       <div className="col-6">
