@@ -61,7 +61,6 @@ const Home = () => {
     test()
   }, [])
 
-  console.log('currentServiceWorker', currentServiceWorker)
   return (
     <div>
       <p className="my-1 text-center">Device tests</p>
