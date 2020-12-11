@@ -95,12 +95,12 @@ const Notifications = ({ currentServiceWorker }) => {
                 subscribeOptions,
               )
 
-              console.log('subscription', subscription)
-              console.log('subscription JSON', subscription.toJSON())
-
               const { keys } = subscription.toJSON()
 
-              console.log('keys', keys)
+              console.log('endpoint', subscription.endpoint)
+              console.log('auth', keys.auth)
+              console.log('p256dh', keys.p256dh)
+
               const response = await fetch(
                 `${process.env.REACT_APP_API_URL}/web-push/register`,
                 {
