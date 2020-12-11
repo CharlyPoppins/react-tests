@@ -83,6 +83,7 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   console.log('SW activate')
+  event.waitUntil(clients.claim())
 })
 
 self.addEventListener('fetch', (event) => {
