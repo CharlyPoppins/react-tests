@@ -44,10 +44,13 @@ const Notifications = ({ currentServiceWorker }) => {
         <Button
           className="btn-block btn-secondary"
           onClick={() => {
-            // eslint-disable-next-line no-unused-vars
-            const n = new Notification(
-              `This is a text notification ${Math.random(100)}`,
-            )
+            if (currentServiceWorker) {
+              currentServiceWorker.showNotification(
+                `This is a text notification ${Math.random(100)}`,
+              )
+            } else {
+              console.warn('No Service worker provided.')
+            }
           }}
           disabled={!notificationsEnabled}
         >
@@ -105,6 +108,7 @@ Notifications.propTypes = {
     pushManager: PropTypes.shape({
       subscribe: PropTypes.func,
     }),
+    showNotification: PropTypes.func,
   }),
 }
 
